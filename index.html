@@ -8,8 +8,20 @@
 </head>
 <body>
     <div>
-        <input type="number" id="esgrade" step="0.01" min="0">
-        <p id="germangrade"></p>
+        <b>Calculate the european school grade to a german grade</b>
+        <div>
+            <input type="number" id="esgrade" step="0.01" min="0">
+        </div>
+        <div id="germangrade"></div>
+        <div id="germanpunkte"></div>
+        <div id="Notenschlüssel">
+            <label for="limchoice">"Notenschlüssel" (Percentages may vary in each school), only affects the "Punkte"</label><br>
+                <select name="limchoices" id="limchoice">
+                    <option value="50" selected>50% passing limit (default)</option>
+                    <option value="45">45% passing limit</option>
+                    <option value="40">40% passing limit</option>
+                </select>
+        </div>
         <p id="problemgrade"></p>
     </div>
     <script src="assets/app.js"></script>

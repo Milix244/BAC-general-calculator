@@ -24,6 +24,7 @@
 // 1. ONE GRADE --> GERMAN GRADE SYSTEM
 // ESM (from 2019): https://www.eursc.eu/Documents/2014-03-D-25-de-16.1.pdf#page=13
 // Oberstufe Punktesystem: https://de.wikipedia.org/wiki/Vorlage:Punktesystem_der_gymnasialen_Oberstufe
+// other Punktesystem: 
 
 const esgrade = document.getElementById("esgrade");
 
@@ -67,10 +68,18 @@ function initialisation(){
     abipunkte = Math.round(calcabipunkte(formatgrade));
     germangrade = Math.round(calcgermangrade(abipunkte)*100)/100;
     germanpunkte = Math.round(calcgermanpunkte(Math.round(formatgrade))*100)/100;
-    roundedgermanpunkte = Math.round(germanpunkte)
     
     // Debug
     console.log("abipunkte zsm", abipunkte, "germangrade", germangrade, "germanpunkte", germanpunkte, "roundedgermanpunkte", roundedgermanpunkte);
+
+    document.getElementById("germangrade").innerHTML = 
+    `
+    <p>German Grade System: ${germangrade} </p>
+    `
+    document.getElementById("germanpunkte").innerHTML = 
+    `
+    <p>German "Punkte" System: ${germanpunkte}/15</p> 
+    `
 }
 
 // "Punktesystem (0-900)"
@@ -83,7 +92,7 @@ function calcabipunkte(e){
     }
 }
 
-// "Note 0.67-4.00"
+// "Note 0.67-4.00 and approximation of 4.01-6.00"
 function calcgermangrade(E){
     if (E >= 300){
         return 17/3-E/180;
@@ -93,13 +102,39 @@ function calcgermangrade(E){
     }
 }
 
-// "Punkte 0-15" 
-// Approximation der Punkte, da Notenschlüssel variieren (hier 40% Bestehensgrenze laut WIKI)
+// "Notenschlüssel" for "Punkte 0-15" 
+// Approximation of "Punkte", cuz "Notenschlüssel" may vary (here 50% passing limit from wiki link)
 function calcgermanpunkte(e){
-    if (e >= 50) {
-        return 0.2*e-4;
+
+    let currentlim = document.getElementById("limchoice").value
+
+    const thresholds40 = [0, 20, 27, 33, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
+    const thresholds45 = [0, 24, 32, 39, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 94, 98]
+    const thresholds50 = [0, 30, 37, 43, 50, 56, 61, 67, 72, 76, 81, 85, 88, 92, 94, 98]
+    
+    let currentthresh;
+
+    if(currentlim == 40){
+        currentthresh = thresholds40;
     }
-    else if (e < 50){
-        return -0.0000033608367*e**(4) + 0.0002201502202*e**(3) - 0.0012986704653*e**(2) + 0.0148000148*e;
+    else if(currentlim == 45){
+        currentthresh = thresholds45;
     }
+    else{
+        currentthresh = thresholds50;
+    }
+
+    //Debug
+    console.log("Threshold", currentlim, currentthresh)
+
+    let result = 0;
+    for (let i = 0; i < currentthresh.length; i++) {
+        if (e >= currentthresh[i]) {
+        result = i;
+        }
+        else{
+            break;
+        }
+    }
+    return result;
 }
