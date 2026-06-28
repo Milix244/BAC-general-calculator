@@ -1,32 +1,34 @@
 // Script
 
 // STRUCTURE AND FUNCTIONALITY
-// 1. Calculation of one grade into the german grade system
-// 2. multi step form, multiple slides
-//   2a. step functionality
-//     2aa. localStorage current step
-//   2b. back and next button
-//   2c. progress bar
-// 3. Checkbox System with all possible subjects for S7 (SLIDE 1)
-//   3a. calculate the validity for next
-//   3b. localStorage
-// 4. BAC subject chosing through checkboxes (SLIDE 2)
+// 1. Calculation of one european grade into the german grade system
+// 2. Calculation of one german grade into the european grade system
+// 3. multi step form, multiple slides
+//   3a. step functionality
+//     3aa. localStorage current step
+//   3b. back and next button
+//   3c. progress bar
+// 4. Checkbox System with all possible subjects for S7 (SLIDE 1)
 //   4a. calculate the validity for next
 //   4b. localStorage
-// 5. S7 Grades (SLIDE 3)
-//   5a. a table with A, B, Written, Oral and its subject
-//   5b. calculate validity for next
-//   5c. localStorage
-// 6. Final mark (SLIDE 4)
-//   6a. Calculation of BAC mark
-//   6b. Calculation of BAC mark into the german grading system
+// 5. BAC subject chosing through checkboxes (SLIDE 2)
+//   5a. calculate the validity for next
+//   5b. localStorage
+// 6. S7 Grades (SLIDE 3)
+//   6a. a table with A, B, Written, Oral and its subject
+//   6b. calculate validity for next
+//   6c. localStorage
+// 7. Final mark (SLIDE 4)
+//   7a. Calculation of BAC mark
+//   7b. Calculation of BAC mark into the german grading system
 
-// 1. ONE GRADE --> GERMAN GRADE SYSTEM
-// ESM (from 2019): https://www.eursc.eu/Documents/2014-03-D-25-de-16.1.pdf#page=13
+// 1. EUROPEAN GRADE --> GERMAN GRADE SYSTEM
+// ESM (2019): https://www.eursc.eu/Documents/2014-03-D-25-de-16.1.pdf#page=13
 // Oberstufe Punktesystem: https://de.wikipedia.org/wiki/Vorlage:Punktesystem_der_gymnasialen_Oberstufe
-// other Punktesystem: 
+// KMK Punktesystem (2021): https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/AllgBildung/176_Vereinb-S-II-Abi_2021-02-18.pdf#page=23 
 
 const esgrade = document.getElementById("esgrade");
+const choicepl = document.getElementById("limchoice");
 
 // Eventlistener
 esgrade.addEventListener("input", function(){
@@ -35,7 +37,7 @@ esgrade.addEventListener("input", function(){
 
 // Eventlistener 2
 esgrade.addEventListener("keydown", function(event){
-        if(event.key == "Enter"){
+    if(event.key == "Enter"){
         document.getElementById("problemgrade").innerHTML = "";
         if (inputvalidity()){
             initialisation();
@@ -43,12 +45,27 @@ esgrade.addEventListener("keydown", function(event){
     }
 })
 
+// Eventlistener 3
+choicepl.addEventListener("change", function(event){
+    if (inputvalidity()){
+        initialisation();
+    }
+})
+
 // check for input validity
 function inputvalidity(){
-    if (Number(esgrade.value) <= 10 && Number(esgrade.value) >= 0){
+    if (esgrade.value === ""){
+        document.getElementById("germangrade").innerHTML = `<p>German Grade System:</p>`
+        document.getElementById("germanpunkte").innerHTML = `<p>German "Punkte" System:</p>`
+        document.getElementById("problemgrade").innerHTML = "Please give an input";
+
+    }
+    else if (Number(esgrade.value) <= 10 && Number(esgrade.value) >= 0){
         return true;
     }
-    else {
+    else{
+        document.getElementById("germangrade").innerHTML = `<p>German Grade System:</p>`
+        document.getElementById("germanpunkte").innerHTML = `<p>German "Punkte" System:</p>`
         document.getElementById("problemgrade").innerHTML = "Please only give numbers in the range of 0.00-10.00";
     }
 }
@@ -60,26 +77,22 @@ function initialisation(){
     let abipunkte; // almost not useful btw 
     let germangrade;
     let germanpunkte;
-    let roundedgermanpunkte;
+    let ntgermanpunkte;
 
     // Debug
     console.log(grade, formatgrade);
 
     abipunkte = Math.round(calcabipunkte(formatgrade));
-    germangrade = Math.round(calcgermangrade(abipunkte)*100)/100;
+    germangrade = Math.trunc(calcgermangrade(abipunkte)*10)/10;
+    ntgermanpunkte = Math.round(calcgermangrade(abipunkte)*100)/100;
     germanpunkte = Math.round(calcgermanpunkte(Math.round(formatgrade))*100)/100;
-    
-    // Debug
-    console.log("abipunkte zsm", abipunkte, "germangrade", germangrade, "germanpunkte", germanpunkte, "roundedgermanpunkte", roundedgermanpunkte);
 
-    document.getElementById("germangrade").innerHTML = 
-    `
-    <p>German Grade System: ${germangrade} </p>
-    `
-    document.getElementById("germanpunkte").innerHTML = 
-    `
-    <p>German "Punkte" System: ${germanpunkte}/15</p> 
-    `
+
+    // Debug
+    console.log("abipunkte zsm", abipunkte, "germangrade", germangrade, "germanpunkte", germanpunkte);
+
+    document.getElementById("germangrade").innerHTML = `<p>German Grade System: <b>${germangrade} ( ~ ${ntgermanpunkte}, ~ ${abipunkte}/900)</b></p>`
+    document.getElementById("germanpunkte").innerHTML = `<p>German "Punkte" System: <b>${germanpunkte}/15</b></p>`
 }
 
 // "Punktesystem (0-900)"
@@ -103,7 +116,7 @@ function calcgermangrade(E){
 }
 
 // "Notenschlüssel" for "Punkte 0-15" 
-// Approximation of "Punkte", cuz "Notenschlüssel" may vary (here 50% passing limit from wiki link)
+// Approximation of "Punkte", cuz "Notenschlüssel" may vary (here 40% passing limit as standard)
 function calcgermanpunkte(e){
 
     let currentlim = document.getElementById("limchoice").value
@@ -138,3 +151,21 @@ function calcgermanpunkte(e){
     }
     return result;
 }
+
+
+// 2. GERMAN GRADE --> EUROPEAN GRADE
+// (same references as 1.)
+
+// 3. MULTI STEP FORM
+
+// step functionality
+// back and next button
+// progress bar
+// localStorage current step
+
+// 4. CHECKBOX SYSTEM SUBJECTS S7 (SLIDE 1)
+// Reverse coding from: https://thinkin.co/edu/
+
+
+// calculate the validity for next
+// localStorage
