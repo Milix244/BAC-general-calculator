@@ -56,7 +56,7 @@ choicepl.addEventListener("change", function(event){
 function inputvalidity(){
     if (esgrade.value === ""){
         document.getElementById("germangrade").innerHTML = `<p>German Grade System:</p>`
-        document.getElementById("germanpunkte").innerHTML = `<p>German "Punkte" System:</p>`
+        document.getElementById("germanpunkte").innerHTML = `<p>German "Punktesystem":</p>`
         document.getElementById("problemgrade").innerHTML = "Please give an input";
 
     }
@@ -65,7 +65,7 @@ function inputvalidity(){
     }
     else{
         document.getElementById("germangrade").innerHTML = `<p>German Grade System:</p>`
-        document.getElementById("germanpunkte").innerHTML = `<p>German "Punkte" System:</p>`
+        document.getElementById("germanpunkte").innerHTML = `<p>German "Punktesystem":</p>`
         document.getElementById("problemgrade").innerHTML = "Please only give numbers in the range of 0.00-10.00";
     }
 }
@@ -92,7 +92,7 @@ function initialisation(){
     console.log("abipunkte zsm", abipunkte, "germangrade", germangrade, "germanpunkte", germanpunkte);
 
     document.getElementById("germangrade").innerHTML = `<p>German Grade System: <b>${germangrade} ( ~ ${ntgermanpunkte}, ~ ${abipunkte}/900)</b></p>`
-    document.getElementById("germanpunkte").innerHTML = `<p>German "Punkte" System: <b>${germanpunkte}/15</b></p>`
+    document.getElementById("germanpunkte").innerHTML = `<p>German "Punktesystem": <b>${germanpunkte}/15</b></p>`
 }
 
 // "Punktesystem (0-900)"
@@ -155,6 +155,82 @@ function calcgermanpunkte(e){
 
 // 2. GERMAN GRADE --> EUROPEAN GRADE
 // (same references as 1.)
+
+const gergrade = document.getElementById("gergrade");
+
+// Eventlistener
+gergrade.addEventListener("input", function(){
+    document.getElementById("problemgrade2").innerHTML = "";
+})
+
+// Eventlistener 2
+gergrade.addEventListener("keydown", function(event){
+    if(event.key == "Enter"){
+        document.getElementById("problemgrade2").innerHTML = "";
+        if(inputvalidity2()){
+            initialisation2();            
+        };
+
+    }
+})
+
+function inputvalidity2(){
+    if (gergrade.value === ""){
+        document.getElementById("esgrade2").innerHTML = `<p>European Grade System:</p>`
+        document.getElementById("problemgrade2").innerHTML = "Please give an input";
+    }
+    else if(Math.trunc(Number(gergrade.value)*10)/10 >= 0.6 && Number(gergrade.value) <= 6){
+        return true;
+    }
+    else{
+        document.getElementById("esgrade2").innerHTML = `<p>European Grade System:</p>`
+        document.getElementById("problemgrade2").innerHTML = "Please only give numbers in the range of 0.6-6.0";
+    }
+}
+
+function initialisation2(){
+    const cgrade = Number(gergrade.value);
+    const formgrade = Math.trunc(cgrade*10)/10;
+    let maxeusgrade;
+    let mineusgrade;
+
+    maxeusgrade = Math.trunc(maxcalceusgrade(formgrade)*10)/100;
+    mineusgrade = Math.trunc(mincalceusgrade(formgrade)*10)/100;
+
+    //Debug
+    console.log(" min", mineusgrade, "max", maxeusgrade);
+
+    document.getElementById("esgrade2").innerHTML = `<p>European Grade System: <b>von ${mineusgrade} bis ${maxeusgrade}</b></p>`
+}
+
+function maxcalceusgrade(N){
+    if (N >= 0.67 && N <= 4){
+        return ((180*(17/3-N))+300)/12;
+    }
+    else if(N < 0.67){
+        return 10;
+    }
+    else{
+        return (150*(6-N))/6;
+    }
+}
+
+function mincalceusgrade(N){
+    minN = Number(N.toFixed(1) + "9")
+    if (minN >= 0.67 && minN <= 4){
+        
+        return ((180*(17/3-minN))+300)/12;
+    }
+    else if(minN < 0.67){
+        return 10;
+    }
+    else if(minN > 6.0){
+        return 0;
+    }
+    else{
+        return (150*(6-minN))/6;
+    }
+}
 
 // 3. MULTI STEP FORM
 
