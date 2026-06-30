@@ -26,6 +26,8 @@
 // ESM (2019): https://www.eursc.eu/Documents/2014-03-D-25-de-16.1.pdf#page=13
 // Oberstufe Punktesystem: https://de.wikipedia.org/wiki/Vorlage:Punktesystem_der_gymnasialen_Oberstufe
 // KMK Punktesystem (2021): https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/AllgBildung/176_Vereinb-S-II-Abi_2021-02-18.pdf#page=23 
+// e = European grade in "Vomhundertsatz", E = Abipunkte (0-900), N = German grade
+
 
 const esgrade = document.getElementById("esgrade");
 const choicepl = document.getElementById("limchoice");
@@ -245,3 +247,22 @@ function mincalceusgrade(N){
 
 // calculate the validity for next
 // localStorage
+
+
+// 7. CALCULATE BAC
+// reference genereal calc: https://www.eursc.eu/BasicTexts/2015-05-D-12-de-50.pdf#page=15
+// reference 2: https://www.eursc.eu/BasicTexts/2015-05-D-12-de-50.pdf#page=49
+// C = Vornote (50%), E = Written BAC (35$), O = Oral BAC (15%)
+// A = A-Note, B = B-Note
+
+function calcavg(){
+    
+}
+
+function calcC(A, B){
+    return (Math.round((0.4*A + 0.6*B)*10))/10 
+}
+
+function calcfinalbac(C, E, O){
+    return (Math.round((0.5*C + 0.35*E + 0.15*O)*100))/100;
+}
