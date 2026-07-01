@@ -25,135 +25,144 @@
 // 1. EUROPEAN GRADE --> GERMAN GRADE SYSTEM
 // ESM (2019): https://www.eursc.eu/Documents/2014-03-D-25-de-16.1.pdf#page=13
 // Oberstufe Punktesystem: https://de.wikipedia.org/wiki/Vorlage:Punktesystem_der_gymnasialen_Oberstufe
-// KMK Punktesystem (2021): https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/AllgBildung/176_Vereinb-S-II-Abi_2021-02-18.pdf#page=23 
+// KMK Punktesystem (2021): https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/AllgBildung/176_Vereinb-S-II-Abi_2021-02-18.pdf#page=23
 // e = European grade in "Vomhundertsatz", E = Abipunkte (0-900), N = German grade
-
 
 const esgrade = document.getElementById("esgrade");
 const choicepl = document.getElementById("limchoice");
 
 // Eventlistener
-esgrade.addEventListener("input", function(){
-    document.getElementById("problemgrade").innerHTML = "";
-})
+esgrade.addEventListener("input", function () {
+  document.getElementById("problemgrade").innerHTML = "";
+});
 
 // Eventlistener 2
-esgrade.addEventListener("keydown", function(event){
-    if(event.key == "Enter"){
-        document.getElementById("problemgrade").innerHTML = "";
-        if (inputvalidity()){
-            initialisation();
-        }
+esgrade.addEventListener("keydown", function (event) {
+  if (event.key == "Enter") {
+    document.getElementById("problemgrade").innerHTML = "";
+    if (inputvalidity()) {
+      initialisation();
     }
-})
+  }
+});
 
 // Eventlistener 3
-choicepl.addEventListener("change", function(event){
-    if (inputvalidity()){
-        initialisation();
-    }
-})
+choicepl.addEventListener("change", function (event) {
+  if (inputvalidity()) {
+    initialisation();
+  }
+});
 
 // check for input validity
-function inputvalidity(){
-    if (esgrade.value === ""){
-        document.getElementById("germangrade").innerHTML = `<p>German Grade System:</p>`
-        document.getElementById("germanpunkte").innerHTML = `<p>German "Punktesystem":</p>`
-        document.getElementById("problemgrade").innerHTML = "Please give an input";
-
-    }
-    else if (Number(esgrade.value) <= 10 && Number(esgrade.value) >= 0){
-        return true;
-    }
-    else{
-        document.getElementById("germangrade").innerHTML = `<p>German Grade System:</p>`
-        document.getElementById("germanpunkte").innerHTML = `<p>German "Punktesystem":</p>`
-        document.getElementById("problemgrade").innerHTML = "Please only give numbers in the range of 0.00-10.00";
-    }
+function inputvalidity() {
+  if (esgrade.value === "") {
+    document.getElementById("germangrade").innerHTML =
+      `<p>German Grade System:</p>`;
+    document.getElementById("germanpunkte").innerHTML =
+      `<p>German "Punktesystem":</p>`;
+    document.getElementById("problemgrade").innerHTML = "Please give an input";
+  } else if (Number(esgrade.value) <= 10 && Number(esgrade.value) >= 0) {
+    return true;
+  } else {
+    document.getElementById("germangrade").innerHTML =
+      `<p>German Grade System:</p>`;
+    document.getElementById("germanpunkte").innerHTML =
+      `<p>German "Punktesystem":</p>`;
+    document.getElementById("problemgrade").innerHTML =
+      "Please only give numbers in the range of 0.00-10.00";
+  }
 }
 
 // Variables + function calls
-function initialisation(){
-    const grade = Number(esgrade.value);
-    const formatgrade = Math.round(grade*100)/10;
-    let abipunkte; // almost not useful btw 
-    let germangrade;
-    let germanpunkte;
-    let ntgermanpunkte;
+function initialisation() {
+  const grade = Number(esgrade.value);
+  const formatgrade = Math.round(grade * 100) / 10;
+  let abipunkte; // almost not useful btw
+  let germangrade;
+  let germanpunkte;
+  let ntgermanpunkte;
 
-    // Debug
-    console.log(grade, formatgrade);
+  // Debug
+  console.log(grade, formatgrade);
 
-    abipunkte = Math.round(calcabipunkte(formatgrade));
-    germangrade = Math.trunc(calcgermangrade(abipunkte)*10)/10;
-    ntgermanpunkte = Math.round(calcgermangrade(abipunkte)*100)/100;
-    germanpunkte = Math.round(calcgermanpunkte(Math.round(formatgrade))*100)/100;
+  abipunkte = Math.round(calcabipunkte(formatgrade));
+  germangrade = Math.trunc(calcgermangrade(abipunkte) * 10) / 10;
+  ntgermanpunkte = Math.round(calcgermangrade(abipunkte) * 100) / 100;
+  germanpunkte =
+    Math.round(calcgermanpunkte(Math.round(formatgrade)) * 100) / 100;
 
+  // Debug
+  console.log(
+    "abipunkte zsm",
+    abipunkte,
+    "germangrade",
+    germangrade,
+    "germanpunkte",
+    germanpunkte,
+  );
 
-    // Debug
-    console.log("abipunkte zsm", abipunkte, "germangrade", germangrade, "germanpunkte", germanpunkte);
-
-    document.getElementById("germangrade").innerHTML = `<p>German Grade System: <b>${germangrade} ( ~ ${ntgermanpunkte}, ~ ${abipunkte}/900)</b></p>`
-    document.getElementById("germanpunkte").innerHTML = `<p>German "Punktesystem": <b>${germanpunkte}/15</b></p>`
+  document.getElementById("germangrade").innerHTML =
+    `<p>German Grade System: <b>${germangrade} ( ~ ${ntgermanpunkte}, ~ ${abipunkte}/900)</b></p>`;
+  document.getElementById("germanpunkte").innerHTML =
+    `<p>German "Punktesystem": <b>${germanpunkte}/15</b></p>`;
 }
 
 // "Punktesystem (0-900)"
-function calcabipunkte(e){
-    if (e >= 50) {
-        return 12*e-300;
-    }
-    else if (e < 50){
-        return 6*e;
-    }
+function calcabipunkte(e) {
+  if (e >= 50) {
+    return 12 * e - 300;
+  } else if (e < 50) {
+    return 6 * e;
+  }
 }
 
 // "Note 0.67-4.00 and approximation of 4.01-6.00"
-function calcgermangrade(E){
-    if (E >= 300){
-        return 17/3-E/180;
-    }
-    else{
-        return 6-E/150;
-    }
+function calcgermangrade(E) {
+  if (E >= 300) {
+    return 17 / 3 - E / 180;
+  } else {
+    return 6 - E / 150;
+  }
 }
 
-// "Notenschlüssel" for "Punkte 0-15" 
+// "Notenschlüssel" for "Punkte 0-15"
 // Approximation of "Punkte", cuz "Notenschlüssel" may vary (here 40% passing limit as standard)
-function calcgermanpunkte(e){
+function calcgermanpunkte(e) {
+  let currentlim = document.getElementById("limchoice").value;
 
-    let currentlim = document.getElementById("limchoice").value
+  const thresholds40 = [
+    0, 20, 27, 33, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
+  ];
+  const thresholds45 = [
+    0, 24, 32, 39, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 94, 98,
+  ];
+  const thresholds50 = [
+    0, 30, 37, 43, 50, 56, 61, 67, 72, 76, 81, 85, 88, 92, 94, 98,
+  ];
 
-    const thresholds40 = [0, 20, 27, 33, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
-    const thresholds45 = [0, 24, 32, 39, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 94, 98]
-    const thresholds50 = [0, 30, 37, 43, 50, 56, 61, 67, 72, 76, 81, 85, 88, 92, 94, 98]
-    
-    let currentthresh;
+  let currentthresh;
 
-    if(currentlim == 40){
-        currentthresh = thresholds40;
+  if (currentlim == 40) {
+    currentthresh = thresholds40;
+  } else if (currentlim == 45) {
+    currentthresh = thresholds45;
+  } else {
+    currentthresh = thresholds50;
+  }
+
+  //Debug
+  console.log("Threshold", currentlim, currentthresh);
+
+  let result = 0;
+  for (let i = 0; i < currentthresh.length; i++) {
+    if (e >= currentthresh[i]) {
+      result = i;
+    } else {
+      break;
     }
-    else if(currentlim == 45){
-        currentthresh = thresholds45;
-    }
-    else{
-        currentthresh = thresholds50;
-    }
-
-    //Debug
-    console.log("Threshold", currentlim, currentthresh)
-
-    let result = 0;
-    for (let i = 0; i < currentthresh.length; i++) {
-        if (e >= currentthresh[i]) {
-        result = i;
-        }
-        else{
-            break;
-        }
-    }
-    return result;
+  }
+  return result;
 }
-
 
 // 2. GERMAN GRADE --> EUROPEAN GRADE
 // (same references as 1.)
@@ -161,77 +170,75 @@ function calcgermanpunkte(e){
 const gergrade = document.getElementById("gergrade");
 
 // Eventlistener
-gergrade.addEventListener("input", function(){
-    document.getElementById("problemgrade2").innerHTML = "";
-})
+gergrade.addEventListener("input", function () {
+  document.getElementById("problemgrade2").innerHTML = "";
+});
 
 // Eventlistener 2
-gergrade.addEventListener("keydown", function(event){
-    if(event.key == "Enter"){
-        document.getElementById("problemgrade2").innerHTML = "";
-        if(inputvalidity2()){
-            initialisation2();            
-        };
+gergrade.addEventListener("keydown", function (event) {
+  if (event.key == "Enter") {
+    document.getElementById("problemgrade2").innerHTML = "";
+    if (inputvalidity2()) {
+      initialisation2();
+    }
+  }
+});
 
-    }
-})
-
-function inputvalidity2(){
-    if (gergrade.value === ""){
-        document.getElementById("esgrade2").innerHTML = `<p>European Grade System:</p>`
-        document.getElementById("problemgrade2").innerHTML = "Please give an input";
-    }
-    else if(Math.trunc(Number(gergrade.value)*10)/10 >= 0.6 && Number(gergrade.value) <= 6){
-        return true;
-    }
-    else{
-        document.getElementById("esgrade2").innerHTML = `<p>European Grade System:</p>`
-        document.getElementById("problemgrade2").innerHTML = "Please only give numbers in the range of 0.6-6.0";
-    }
+function inputvalidity2() {
+  if (gergrade.value === "") {
+    document.getElementById("esgrade2").innerHTML =
+      `<p>European Grade System:</p>`;
+    document.getElementById("problemgrade2").innerHTML = "Please give an input";
+  } else if (
+    Math.trunc(Number(gergrade.value) * 10) / 10 >= 0.6 &&
+    Number(gergrade.value) <= 6
+  ) {
+    return true;
+  } else {
+    document.getElementById("esgrade2").innerHTML =
+      `<p>European Grade System:</p>`;
+    document.getElementById("problemgrade2").innerHTML =
+      "Please only give numbers in the range of 0.6-6.0";
+  }
 }
 
-function initialisation2(){
-    const cgrade = Number(gergrade.value);
-    const formgrade = Math.trunc(cgrade*10)/10;
-    let maxeusgrade;
-    let mineusgrade;
+function initialisation2() {
+  const cgrade = Number(gergrade.value);
+  const formgrade = Math.trunc(cgrade * 10) / 10;
+  let maxeusgrade;
+  let mineusgrade;
 
-    maxeusgrade = Math.trunc(maxcalceusgrade(formgrade)*10)/100;
-    mineusgrade = Math.trunc(mincalceusgrade(formgrade)*10)/100;
+  maxeusgrade = Math.trunc(maxcalceusgrade(formgrade) * 10) / 100;
+  mineusgrade = Math.trunc(mincalceusgrade(formgrade) * 10) / 100;
 
-    //Debug
-    console.log(" min", mineusgrade, "max", maxeusgrade);
+  //Debug
+  console.log(" min", mineusgrade, "max", maxeusgrade);
 
-    document.getElementById("esgrade2").innerHTML = `<p>European Grade System: <b>von ${mineusgrade} bis ${maxeusgrade}</b></p>`
+  document.getElementById("esgrade2").innerHTML =
+    `<p>European Grade System: <b>from ${mineusgrade} to ${maxeusgrade}</b></p>`;
 }
 
-function maxcalceusgrade(N){
-    if (N >= 0.67 && N <= 4){
-        return ((180*(17/3-N))+300)/12;
-    }
-    else if(N < 0.67){
-        return 10;
-    }
-    else{
-        return (150*(6-N))/6;
-    }
+function maxcalceusgrade(N) {
+  if (N >= 0.67 && N <= 4) {
+    return (180 * (17 / 3 - N) + 300) / 12;
+  } else if (N < 0.67) {
+    return 10;
+  } else {
+    return (150 * (6 - N)) / 6;
+  }
 }
 
-function mincalceusgrade(N){
-    minN = Number(N.toFixed(1) + "9")
-    if (minN >= 0.67 && minN <= 4){
-        
-        return ((180*(17/3-minN))+300)/12;
-    }
-    else if(minN < 0.67){
-        return 10;
-    }
-    else if(minN > 6.0){
-        return 0;
-    }
-    else{
-        return (150*(6-minN))/6;
-    }
+function mincalceusgrade(N) {
+  minN = Number(N.toFixed(1) + "9");
+  if (minN >= 0.67 && minN <= 4) {
+    return (180 * (17 / 3 - minN) + 300) / 12;
+  } else if (minN < 0.67) {
+    return 10;
+  } else if (minN > 6.0) {
+    return 0;
+  } else {
+    return (150 * (6 - minN)) / 6;
+  }
 }
 
 // 3. MULTI STEP FORM
@@ -243,26 +250,127 @@ function mincalceusgrade(N){
 
 // 4. CHECKBOX SYSTEM SUBJECTS S7 (SLIDE 1)
 // Reverse coding from: https://thinkin.co/edu/
+// Reference: https://www.eursc.eu/BasicTexts/2019-04-D-13-en-10.pdf#page=9
 
+let currenthours;
+const doc = (id) => document.getElementById(id);
+const problemsub1 = document.getElementById("problemsub1");
+const allboxes = document.querySelectorAll(".box");
+
+// Eventlistener to every box
+allboxes.forEach((box) => {
+  box.addEventListener("change", validitycheckboxes);
+});
+
+// MAA, MA3, MA5
+function MAcheck() {
+  if (doc("MAA").checked && doc("MA5").checked && !doc("MA3").checked) {
+    return true;
+  } else if (doc("MA5").checked && doc("MA3").checked) {
+    problemsub1.innerHTML += `<p id="MAA1">Not possible to have MA5 and MA3</p>`;
+    return false;
+  } else if (doc("MAA").checked && !doc("MA5").checked) {
+    problemsub1.innerHTML += `<p id="MAA2">MAA is only possible with MA5</p>`;
+    return false;
+  }
+}
+
+// PH, GE, HI comp if not 4
+function PHGEHIcheck() {
+  if (
+    document.querySelectorAll(".GE").length === 1 &&
+    document.querySelectorAll(".HI").length === 1 &&
+    document.querySelectorAll(".PH").length === 1
+  ) {
+    return true;
+  } else if (document.querySelectorAll(".GE").length === 2) {
+    problemsub1.innerHTML += `<p>Not possible to have GE2 and GE4</p>`;
+    return false;
+  } else if (document.querySelectorAll(".HI").length === 2) {
+    problemsub1.innerHTML += `<p>Not possible to have HI2 and HI4</p>`;
+    return false;
+  } else if (document.querySelectorAll(".PH").length === 2) {
+    problemsub1.innerHTML += `<p>Not possible to have PH2 and PH4</p>`;
+  }
+}
+
+// MU, AR, PH, GE, HI Dupes
+function dupescheck1() {}
+
+// ONL, L4
+function ONLL4check() {}
+
+// STS comp, when no BIO, PHY, CHI
+
+// LABOR Dupes
+
+// LCH, LPH, LBI, CHI, PHY, BIO
+
+// Max. time 40h, recommended max 35h
+
+// Min 31h
+
+// calculate the validity for next, enabling btn
+function validitycheckboxes() {
+  problemsub1.innerHTML = "";
+  if (MAcheck()) {
+    console.log("TRUEEEE");
+  } else {
+    console.log("NOOO");
+  }
+}
+
+// localStorage
+
+// 5. BAC SUBJECT CHECKBOXES (SLIDE 2)
+
+// L1A, L2A
 
 // calculate the validity for next
 // localStorage
 
+// 6. S7 GRADES TABLE (SLIDE 3)
 
-// 7. CALCULATE BAC
+// a table with A, B, Written, Oral and its subject
+// calculate validity for next
+// localStorage
+
+// 7. CALCULATE BAC (SLIDE 4)
 // reference genereal calc: https://www.eursc.eu/BasicTexts/2015-05-D-12-de-50.pdf#page=15
 // reference 2: https://www.eursc.eu/BasicTexts/2015-05-D-12-de-50.pdf#page=49
 // C = Vornote (50%), E = Written BAC (35$), O = Oral BAC (15%)
 // A = A-Note, B = B-Note
 
-function calcavg(){
-    
+// Eventlistener
+document.getElementById("next3").addEventListener("click", function () {});
+
+function calcall() {
+  const A = calcavg();
+  const B = calcavg();
+  const C = calcC(A, B);
+  const E = calcavg();
+  const O = calcavg();
+  const finalbac = calcfinalbac(C, E, O);
 }
 
-function calcC(A, B){
-    return (Math.round((0.4*A + 0.6*B)*10))/10 
+function calcavg(arr) {
+  if (arr.length === 0) {
+    return 0;
+  }
+  const sum = arr.reduce((acc, num) => {
+    acc + num;
+  }, 0);
+
+  // Debug
+  console.log("Sum ", sum, "Avg ", sum / arr.length);
+
+  return sum / arr.length;
 }
 
-function calcfinalbac(C, E, O){
-    return (Math.round((0.5*C + 0.35*E + 0.15*O)*100))/100;
+function calcC(A, B) {
+  return Math.round((0.4 * A + 0.6 * B) * 10) / 10;
+}
+
+function calcfinalbac(C, E, O) {
+  return Math.round((0.5 * C + 0.35 * E + 0.15 * O) * 100) / 100;
 }
