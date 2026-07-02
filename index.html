@@ -49,7 +49,7 @@
                 <h3>Step 1: Select subjects for S7</h3>
                 <div id="compulsorysub">
                     <h4>Compulsory subjects</h4>
-                    <input type="checkbox" class="box compulsory L" id="L1" value="4" disabled>
+                    <input type="checkbox" class="box compulsory L" id="L1" value="4" checked disabled>
                     <label for="L1">L1</label>
                     <input type="checkbox" class="box compulsory L" id="L2" value="3" checked disabled>
                     <label for="L2">L2</label>
@@ -70,7 +70,7 @@
                     <input type="checkbox" class="box compulsory PH" id="PH2" value="2">
                     <label for="PH2">PH2</label>
                 </div>
-                <div id="4periodopt">
+                <div id="period4opt">
                     <h4>4 periods options</h4>
                     <input type="checkbox" class="box 4periods" id="CHI" value="4">
                     <label for="CHI">CHI</label>
@@ -84,21 +84,21 @@
                     <label for="GE4">GE4</label>
                     <input type="checkbox" class="box 4periods AR" id="AR4" value="4">
                     <label for="AR4">AR4</label>
-                    <input type="checkbox" class="box 4periods MU" id="MU4" value="4">
+                    <input type="checkbox" class="box periods4 MU" id="MU4" value="4">
                     <label for="MU4">MU4</label>
-                    <input type="checkbox" class="box 4periods PH" id="PH4" value="4">
+                    <input type="checkbox" class="box periods4 PH" id="PH4" value="4">
                     <label for="PH4">PH4</label>
-                    <input type="checkbox" class="box 4periods" id="L3" value="4">
+                    <input type="checkbox" class="box periods4" id="L3" value="4">
                     <label for="L3">L3</label>
-                    <input type="checkbox" class="box 4periods" id="ECO" value="4">
+                    <input type="checkbox" class="box periods4" id="ECO" value="4">
                     <label for="ECO">ECO</label>
-                    <input type="checkbox" class="box 4periods" id="LAT" value="4">
+                    <input type="checkbox" class="box periods4" id="LAT" value="4">
                     <label for="LAT">LAT</label>
-                    <input type="checkbox" class="box 4periods" id="L4" value="4">
+                    <input type="checkbox" class="box periods4" id="L4" value="4">
                     <label for="L4">L4</label>
-                    <input type="checkbox" class="box 4periods" id="ONL" value="4">
+                    <input type="checkbox" class="box periods4" id="ONL" value="4">
                     <label for="ONL">ONL</label>
-                    <input type="checkbox" class="box 4periods" id="AGR" value="4">
+                    <input type="checkbox" class="box periods4" id="AGR" value="4">
                     <label for="AGR">AGR</label>
                 </div>
                 <div id="advancedcour">
@@ -142,6 +142,9 @@
                     <label for="ARH">ARH</label>
                     <input type="checkbox" class="box complementary" id="SUS" value="2">
                     <label for="SUS">SUS</label>
+                </div>
+                <div id="hours">
+                    <h4>You have <span id="tothours"></span> periods</h4>
                 </div>
                 <div id="problemsub1"></div>
                 <button id="next1" disabled>Next</button>

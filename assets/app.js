@@ -262,61 +262,267 @@ allboxes.forEach((box) => {
   box.addEventListener("change", validitycheckboxes);
 });
 
+// Eventlistener 2
+allboxes.forEach((box) => {
+  box.addEventListener("change", calccurrenthours);
+});
+
 // MAA, MA3, MA5
 function MAcheck() {
-  if (doc("MAA").checked && doc("MA5").checked && !doc("MA3").checked) {
-    return true;
-  } else if (doc("MA5").checked && doc("MA3").checked) {
+  const A = doc("MAA").checked;
+  const five = doc("MA5").checked;
+  const three = doc("MA3").checked;
+
+  let ok = true;
+
+  if (five && three) {
     problemsub1.innerHTML += `<p id="MAA1">Not possible to have MA5 and MA3</p>`;
-    return false;
-  } else if (doc("MAA").checked && !doc("MA5").checked) {
-    problemsub1.innerHTML += `<p id="MAA2">MAA is only possible with MA5</p>`;
-    return false;
+    ok = false;
   }
+
+  if (A && !five) {
+    problemsub1.innerHTML += `<p id="MAA2">MAA is only possible with MA5</p>`;
+    ok = false;
+  }
+
+  if (!three && !five) {
+    problemsub1.innerHTML += `<p id="MA">You at least need one MA</p>`;
+    ok = false;
+  }
+
+  return ok;
 }
 
 // PH, GE, HI comp if not 4
 function PHGEHIcheck() {
-  if (
-    document.querySelectorAll(".GE").length === 1 &&
-    document.querySelectorAll(".HI").length === 1 &&
-    document.querySelectorAll(".PH").length === 1
-  ) {
-    return true;
-  } else if (document.querySelectorAll(".GE").length === 2) {
-    problemsub1.innerHTML += `<p>Not possible to have GE2 and GE4</p>`;
-    return false;
-  } else if (document.querySelectorAll(".HI").length === 2) {
-    problemsub1.innerHTML += `<p>Not possible to have HI2 and HI4</p>`;
-    return false;
-  } else if (document.querySelectorAll(".PH").length === 2) {
-    problemsub1.innerHTML += `<p>Not possible to have PH2 and PH4</p>`;
+  const ge2 = doc("GE2").checked;
+  const ge4 = doc("GE4").checked;
+  const hi2 = doc("HI2").checked;
+  const hi4 = doc("HI4").checked;
+  const ph2 = doc("PH2").checked;
+  const ph4 = doc("PH4").checked;
+
+  let ok = true;
+
+  if (!ge2 && !ge4) {
+    problemsub1.innerHTML += `<p>You at least need one GE</p>`;
+    ok = false;
   }
+  if (!hi2 && !hi4) {
+    problemsub1.innerHTML += `<p>You at least need one HI</p>`;
+    ok = false;
+  }
+  if (!ph2 && !ph4) {
+    problemsub1.innerHTML += `<p>You at least need one PH</p>`;
+    ok = false;
+  }
+
+  return ok;
 }
 
 // MU, AR, PH, GE, HI Dupes
-function dupescheck1() {}
+function dupescheck1() {
+  const ge = document.querySelectorAll(".GE:checked").length;
+  const hi = document.querySelectorAll(".HI:checked").length;
+  const ph = document.querySelectorAll(".PH:checked").length;
+  const ar = document.querySelectorAll(".AR:checked").length;
+  const mu = document.querySelectorAll(".MU:checked").length;
+
+  let ok = true;
+
+  if (ge > 1) {
+    problemsub1.innerHTML += `<p>Not possible to have more than one GE selected</p>`;
+    ok = false;
+  }
+
+  if (hi > 1) {
+    problemsub1.innerHTML += `<p>Not possible to have more than one HI selected</p>`;
+    ok = false;
+  }
+
+  if (ph > 1) {
+    problemsub1.innerHTML += `<p>Not possible to have more than one PH selected</p>`;
+    ok = false;
+  }
+
+  if (ar > 1) {
+    problemsub1.innerHTML += `<p>Not possible to have more than one AR selected</p>`;
+    ok = false;
+  }
+
+  if (mu > 1) {
+    problemsub1.innerHTML += `<p>Not possible to have more than one MU selected</p>`;
+    ok = false;
+  }
+
+  return ok;
+}
 
 // ONL, L4
-function ONLL4check() {}
+function ONLL4check() {
+  const onl = doc("ONL").checked;
+  const l4 = doc("L4").checked;
+
+  let ok = true;
+
+  if (onl && l4) {
+    problemsub1.innerHTML += `<p>Not possible to have ONL and L4</p>`;
+    ok = false;
+  }
+
+  return ok;
+}
 
 // STS comp, when no BIO, PHY, CHI
 
+function STScheck() {
+  const sts = doc("STS").checked;
+  const bio = doc("BIO").checked;
+  const phy = doc("PHY").checked;
+  const chi = doc("CHI").checked;
+
+  let ok = true;
+
+  if (!sts && !bio && !phy && !chi) {
+    problemsub1.innerHTML += `<p>You need at least one science course (STS, PHY, BIO, CHI)</p>`;
+    ok = false;
+  }
+  if (sts && bio && phy && chi) {
+    problemsub1.innerHTML += `<p>Too many science courses (STS, PHY, BIO, CHI)</p>`;
+    ok = false;
+  }
+
+  return ok;
+}
+
 // LABOR Dupes
+
+function Labordupecheck() {
+  const lch = doc("LCH").checked;
+  const lbi = doc("LBI").checked;
+  const lph = doc("LPH").checked;
+
+  let ok = true;
+
+  if ((lch && lbi) || (lbi && lph) || (lch && lph)) {
+    problemsub1.innerHTML += `<p>You cannot have multiple lab courses</p>`;
+    ok = false;
+  }
+
+  return ok;
+}
 
 // LCH, LPH, LBI, CHI, PHY, BIO
 
-// Max. time 40h, recommended max 35h
+function Laboroverlapcheck() {
+  const lch = doc("LCH").checked;
+  const lbi = doc("LBI").checked;
+  const lph = doc("LPH").checked;
+  const chi = doc("CHI").checked;
+  const phy = doc("PHY").checked;
+  const bio = doc("BIO").checked;
 
-// Min 31h
+  let ok = true;
+
+  if (lch && !chi) {
+    problemsub1.innerHTML += `<p>You have to pick CHI in order to have LCH</p>`;
+    ok = false;
+  }
+  if (lbi && !bio) {
+    problemsub1.innerHTML += `<p>You have to pick BIO in order to have LBI</p>`;
+    ok = false;
+  }
+  if (lph && !phy) {
+    problemsub1.innerHTML += `<p>You have to pick PHY in order to have LPH</p>`;
+    ok = false;
+  }
+
+  return ok;
+}
+
+// at least two 4periods
+function fourperiodcheck() {
+  const current4period = document.querySelectorAll(".periods4:checked").length;
+
+  let ok = true;
+
+  if (current4period < 2) {
+    problemsub1.innerHTML += `<p>You need to have at least two 4 periods options</p>`;
+    ok = false;
+  }
+
+  return ok;
+}
+
+// 29 non complementary
+function noncomplementcheck() {
+  const noncomplementary = document.querySelectorAll(
+    ".compulsory:checked, .periods4:checked, .advanced:checked",
+  );
+  const noncomphours = [...noncomplementary].reduce(
+    (sum, checkbox) => sum + Number(checkbox.value),
+    0,
+  );
+
+  let ok = true;
+
+  if (noncomphours < 29) {
+    problemsub1.innerHTML += `<p>You need at least 29 periods of non complementary subjects</p>`;
+    ok = false;
+  }
+
+  return ok;
+}
+
+// currenthours
+function calccurrenthours() {
+  const allcheckedboxes = document.querySelectorAll(".box:checked");
+  currenthours = [...allcheckedboxes].reduce(
+    (sum, checkbox) => sum + Number(checkbox.value),
+    0,
+  );
+
+  console.log(currenthours);
+  document.getElementById("tothours").innerHTML = `${currenthours}`;
+  return currenthours;
+}
+
+// Max. time 40h, recommended max 35h, Min 31h
+function maxmintime(h) {
+  if (h >= 31 && h <= 35) {
+    return true;
+  } else if (h < 31) {
+    problemsub1.innerHTML += `<p>You didn't reach the minimum amount of periods</p>`;
+    return false;
+  } else if (h > 40) {
+    problemsub1.innerHTML += `<p>You have reached the maximum amount of periods</p>`;
+    return false;
+  } else {
+    problemsub1.innerHTML += `<p>You are over the recommended amount of periods</p>`;
+    return true;
+  }
+}
 
 // calculate the validity for next, enabling btn
 function validitycheckboxes() {
   problemsub1.innerHTML = "";
-  if (MAcheck()) {
+  if (
+    MAcheck() &&
+    PHGEHIcheck() &&
+    dupescheck1() &&
+    ONLL4check() &&
+    STScheck() &&
+    Labordupecheck() &&
+    Laboroverlapcheck() &&
+    fourperiodcheck() &&
+    noncomplementcheck() &&
+    maxmintime(calccurrenthours())
+  ) {
     console.log("TRUEEEE");
+    document.getElementById("next1").disabled = false;
   } else {
     console.log("NOOO");
+    document.getElementById("next1").disabled = true;
   }
 }
 
