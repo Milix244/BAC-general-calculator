@@ -24,5 +24,4 @@ https://milix244.github.io/BAC-general-calculator/
 
 ## Author
 
-A.S., Milix (Student of ESM)
-
+Milix

@@ -13,7 +13,7 @@
     <div class="section">
         <h2>1. European school grade to German grade</h2>
         <div>
-            <input type="number" id="esgrade" step="0.01" min="0" placeholder=" - /10.00">
+            <input type="number" id="esgrade" step="0.01" min="0" placeholder="0.00-10.00">
         </div>
         <div id="germangrade">
             <p>German Grade System:</p>
@@ -31,118 +31,200 @@
         </div>
         <div><p id="problemgrade"></p></div>
     </div>
-    <div class="section">
+    <section class="section">
         <h2>2. German grade to European school grade</h2>
         <div>
             <input type="number" id="gergrade" step="0.1" min="0.6" max="6.0" placeholder="1.0-6.0">
-        </div>
         </div>
         <div id="esgrade2">
             <p>European Grade System:</p>
         </div>   
         <div><p id="problemgrade2"></p></div> 
-    </div>
-    <div class="section">
+    </section>
+    <section class="section">
         <h2>3. Calculate BAC mark</h2>
         <div id="multistepform">
             <div class="step active" id="step1">
                 <h3>Step 1: Select subjects for S7</h3>
-                <div id="compulsorysub">
-                    <h4>Compulsory subjects</h4>
-                    <input type="checkbox" class="box compulsory L" id="L1" value="4" checked disabled>
-                    <label for="L1">L1</label>
-                    <input type="checkbox" class="box compulsory L" id="L2" value="3" checked disabled>
-                    <label for="L2">L2</label>
-                    <input type="checkbox" class="box compulsory MA" id="MA3" value="3">
-                    <label for="MA3">MA3</label>
-                    <input type="checkbox" class="box compulsory MA" id="MA5" value="5">
-                    <label for="MA5">MA5</label>
-                    <input type="checkbox" class="box compulsory" id="EP" value="2" checked disabled>
-                    <label for="EP">EP</label>
-                    <input type="checkbox" class="box compulsory" id="Religion" value="1" checked disabled>
-                    <label for="Religion">Religion/Ethics</label>
-                    <input type="checkbox" class="box compulsory" id="STS" value="2">
-                    <label for="STS">STS</label>
-                    <input type="checkbox" class="box compulsory GE" id="GE2" value="2">
-                    <label for="GE2">GE2</label>
-                    <input type="checkbox" class="box compulsory HI" id="HI2" value="2">
-                    <label for="HI2">HI2</label>
-                    <input type="checkbox" class="box compulsory PH" id="PH2" value="2">
-                    <label for="PH2">PH2</label>
-                </div>
-                <div id="period4opt">
-                    <h4>4 periods options</h4>
-                    <input type="checkbox" class="box periods4" id="CHI" value="4">
-                    <label for="CHI">CHI</label>
-                    <input type="checkbox" class="box periods4" id="PHY" value="4">
-                    <label for="PHY">PHY</label>
-                    <input type="checkbox" class="box periods4" id="BIO" value="4">
-                    <label for="BIO">BIO</label>
-                    <input type="checkbox" class="box periods4 HI" id="HI4" value="4">
-                    <label for="HI4">HI4</label>
-                    <input type="checkbox" class="box periods4 GE" id="GE4" value="4">
-                    <label for="GE4">GE4</label>
-                    <input type="checkbox" class="box periods4 AR" id="AR4" value="4">
-                    <label for="AR4">AR4</label>
-                    <input type="checkbox" class="box periods4 MU" id="MU4" value="4">
-                    <label for="MU4">MU4</label>
-                    <input type="checkbox" class="box periods4 PH" id="PH4" value="4">
-                    <label for="PH4">PH4</label>
-                    <input type="checkbox" class="box periods4" id="L3" value="4">
-                    <label for="L3">L3</label>
-                    <input type="checkbox" class="box periods4" id="ECO" value="4">
-                    <label for="ECO">ECO</label>
-                    <input type="checkbox" class="box periods4" id="LAT" value="4">
-                    <label for="LAT">LAT</label>
-                    <input type="checkbox" class="box periods4" id="L4" value="4">
-                    <label for="L4">L4</label>
-                    <input type="checkbox" class="box periods4" id="ONL" value="4">
-                    <label for="ONL">ONL</label>
-                    <input type="checkbox" class="box periods4" id="AGR" value="4">
-                    <label for="AGR">AGR</label>
-                </div>
-                <div id="advancedcour">
-                    <h4>Advanced courses</h4>
-                    <input type="checkbox" class="box advanced" id="L1A" value="3">
-                    <label for="L1A">L1A</label>
-                    <input type="checkbox" class="box advanced" id="L2A" value="3">
-                    <label for="L2A">L2A</label>
-                    <input type="checkbox" class="box advanced MA" id="MAA" value="3">
-                    <label for="MAA">MAA</label>
-                </div>
-                <div id="complementary">
-                    <h4>Complementary subjects</h4>
-                    <input type="checkbox" class="box complementary MU" id="MU2" value="2">
-                    <label for="MU2">MU2</label>
-                    <input type="checkbox" class="box complementary AR" id="AR2" value="2">
-                    <label for="AR2">AR2</label>
-                    <input type="checkbox" class="box complementary" id="ICT" value="2">
-                    <label for="ICT">ICT</label>
-                    <input type="checkbox" class="box complementary" id="LAR" value="2">
-                    <label for="LAR">LAR</label>
-                    <input type="checkbox" class="box complementary" id="SOC" value="2">
-                    <label for="SOC">SOC</label>
-                    <input type="checkbox" class="box complementary" id="SCP" value="2">
-                    <label for="SCP">SCP</label>
-                    <input type="checkbox" class="box complementary" id="L5" value="2">
-                    <label for="L5">L5</label>
-                    <input type="checkbox" class="box complementary LABOR" id="LBI" value="2">
-                    <label for="LBI">LBI</label>
-                    <input type="checkbox" class="box complementary LABOR" id="LCH" value="2">
-                    <label for="LCH">LCH</label>
-                    <input type="checkbox" class="box complementary LABOR" id="LPH" value="2">
-                    <label for="">LPH</label>
-                    <input type="checkbox" class="box complementary" id="SPO" value="2">
-                    <label for="SPO">SPO</label>
-                    <input type="checkbox" class="box complementary" id="DRA" value="2">
-                    <label for="DRA">DRA</label>
-                    <input type="checkbox" class="box complementary" id="ELE" value="2">
-                    <label for="ELE">ELE</label>
-                    <input type="checkbox" class="box complementary" id="ARH" value="2">
-                    <label for="ARH">ARH</label>
-                    <input type="checkbox" class="box complementary" id="SUS" value="2">
-                    <label for="SUS">SUS</label>
-                </div>
+                <fieldset id="compulsorysub">
+                    <legend>Compulsory subjects</legend>
+                    <label>
+                        <input type="checkbox" class="box compulsory L" id="L1" value="4" checked disabled>
+                        L1
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory L" id="L2" value="3" checked disabled>
+                        L2
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory MA" id="MA3" value="3">
+                        MA3
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory MA" id="MA5" value="5">
+                        MA5
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory" id="EP" value="2" checked disabled>
+                        EP
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory" id="Religion" value="1" checked disabled>
+                        Religion/Ethics
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory" id="STS" value="2">
+                        STS
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory GE" id="GE2" value="2">
+                        GE2
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory HI" id="HI2" value="2">
+                        HI2
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box compulsory PH" id="PH2" value="2">
+                        PH2
+                    </label>
+                </fieldset>
+                <fieldset id="period4opt">
+                    <legend>4 periods options</legend>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="CHI" value="4">
+                        CHI
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="PHY" value="4">
+                        PHY
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="BIO" value="4">
+                        BIO
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4 HI" id="HI4" value="4">
+                        HI4
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4 GE" id="GE4" value="4">
+                        GE4
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4 AR" id="AR4" value="4">
+                        AR4
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4 MU" id="MU4" value="4">
+                        MU4
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4 PH" id="PH4" value="4">
+                        PH4
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="L3" value="4">
+                        L3
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="ECO" value="4">
+                        ECO
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="LAT" value="4">
+                        LAT
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="L4" value="4">
+                        L4
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="ONL" value="4">
+                        ONL
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box periods4" id="AGR" value="4">
+                        AGR
+                    </label>
+                </fieldset>
+                <fieldset id="advancedcour">
+                    <legend>Advanced courses</legend>
+                    <label>
+                        <input type="checkbox" class="box advanced" id="L1A" value="3">
+                        L1A
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box advanced" id="L2A" value="3">
+                        L2A
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box advanced MA" id="MAA" value="3">
+                        MAA</label>
+                </fieldset>
+                <fieldset id="complementary">
+                    <legend>Complementary subjects</legend>
+                    <label>
+                        <input type="checkbox" class="box complementary MU" id="MU2" value="2">
+                        MU2
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary AR" id="AR2" value="2">
+                        AR2
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="ICT" value="2">
+                        ICT
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="LAR" value="2">
+                        LAR
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="SOC" value="2">
+                        SOC
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="SCP" value="2">
+                        SCP
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="L5" value="2">
+                        L5
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary LABOR" id="LBI" value="2">
+                        LBI
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary LABOR" id="LCH" value="2">
+                        LCH
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary LABOR" id="LPH" value="2">
+                        LPH
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="SPO" value="2">
+                        SPO
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="DRA" value="2">
+                        DRA
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="ELE" value="2">
+                        ELE
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="ARH" value="2">
+                        ARH
+                    </label>
+                    <label>
+                        <input type="checkbox" class="box complementary" id="SUS" value="2">
+                        SUS
+                    </label>
+                </fieldset>
                 <div id="hours">
                     <h4>You have <span id="tothours"></span> periods</h4>
                 </div>
@@ -151,6 +233,29 @@
             </div>
             <div class="step" id="step2">
                 <h3>Step 2: Select subjects for BAC exams</h3>
+                <fieldset id="writtenoptions">
+                    <legend>Written Subjects</legend>
+                    <label for="written1">Option 1</label>
+                    <select name="written1" id="written1"></select>
+                    <label for="written2">Option 2</label>
+                    <select name="written2" id="written2"></select>
+                    <label for="written3">Option 3</label>
+                    <select name="written3" id="written3"></select>
+                    <label for="written4">Option 4</label>
+                    <select name="written4" id="written4"></select>
+                    <label for="written5">Option 5</label>
+                    <select name="written5" id="written5"></select>
+                </fieldset>
+                <fieldset id="oraloptions">
+                    <legend>Oral Subjects</legend>
+                    <label for="oral1">Option 1</label>
+                    <select name="oral1" id="oral1"></select>
+                    <label for="oral2">Option 2</label>
+                    <select name="oral2" id="oral2"></select>
+                    <label for="oral3">Option 3</label>
+                    <select name="oral3" id="oral3"></select>
+                </fieldset>
+                <div id="problemstep2"></div>
                 <button id="back2">Back</button>
                 <button id="next2" disabled>Next</button>
             </div>
@@ -170,7 +275,7 @@
                 <button id="back4">Back</button>
             </div>
         </div>
-    </div>
+    </section>
     <script src="assets/app.js"></script>
 </body>
 </html>
