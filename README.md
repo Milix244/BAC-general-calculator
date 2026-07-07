@@ -8,11 +8,15 @@ Work in progress. Might contain some errors. Not Vibecoded.
 
 <b>EURSC (2019):</b> https://www.eursc.eu/Documents/2014-03-D-25-de-16.1.pdf#page=13
 
+<b>KMK Äquivalenzberechnung:</b> https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2018/2018_06_14-Richtlinien-EuropSchulen.pdf#page=4
+
 <b>Oberstufe Punktesystem WIKI:</b> https://de.wikipedia.orgwiki/Vorlage:Punktesystem_der_gymnasialen_Oberstufe
 
 <b>KMK Punktesystem (2021):</b> https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/AllgBildung/176_Vereinb-S-II-Abi_2021-02-18.pdf#page=23 
 
 <b>Existing BAC Calculator:</b> https://thinkin.co/edu/
+
+<b>European School BAC subjects:</b> https://www.eursc.eu/de/European-Schools/European-Baccalaureate#:~:text=Die%20Pr%C3%BCfungen%20zum%20Europ%C3%A4ischen%20Abitur
 
 <b>European School Documentation BAC calculation (1):</b> https://www.eursc.eu/BasicTexts/2015-05-D-12-de-50.pdf#page=15
 

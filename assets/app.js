@@ -24,22 +24,24 @@
 
 // 1. EUROPEAN GRADE --> GERMAN GRADE SYSTEM
 // ESM (2019): https://www.eursc.eu/Documents/2014-03-D-25-de-16.1.pdf#page=13
+// Offiziell KMK (2018): https://www.kmk.org/fileadmin/Dateien/veroeffentlichungen_beschluesse/2018/2018_06_14-Richtlinien-EuropSchulen.pdf#page=4
 // Oberstufe Punktesystem: https://de.wikipedia.org/wiki/Vorlage:Punktesystem_der_gymnasialen_Oberstufe
 // KMK Punktesystem (2021): https://www.kmk.org/fileadmin/Dateien/pdf/Bildung/AllgBildung/176_Vereinb-S-II-Abi_2021-02-18.pdf#page=23
 // e = European grade in "Vomhundertsatz", E = Abipunkte (0-900), N = German grade
 
-const esgrade = document.getElementById("esgrade");
-const choicepl = document.getElementById("limchoice");
+const doc = (id) => document.getElementById(id);
+const esgrade = doc("esgrade");
+const choicepl = doc("limchoice");
 
 // Eventlistener
 esgrade.addEventListener("input", function () {
-  document.getElementById("problemgrade").innerHTML = "";
+  doc("problemgrade").innerHTML = "";
 });
 
 // Eventlistener 2
 esgrade.addEventListener("keydown", function (event) {
   if (event.key == "Enter") {
-    document.getElementById("problemgrade").innerHTML = "";
+    doc("problemgrade").innerHTML = "";
     if (inputvalidity()) {
       initialisation();
     }
@@ -56,19 +58,15 @@ choicepl.addEventListener("change", function (event) {
 // check for input validity
 function inputvalidity() {
   if (esgrade.value === "") {
-    document.getElementById("germangrade").innerHTML =
-      `<p>German Grade System:</p>`;
-    document.getElementById("germanpunkte").innerHTML =
-      `<p>German "Punktesystem":</p>`;
-    document.getElementById("problemgrade").innerHTML = "Please give an input";
+    doc("germangrade").innerHTML = `<p>German Grade System:</p>`;
+    doc("germanpunkte").innerHTML = `<p>German "Punktesystem":</p>`;
+    doc("problemgrade").innerHTML = "Please give an input";
   } else if (Number(esgrade.value) <= 10 && Number(esgrade.value) >= 0) {
     return true;
   } else {
-    document.getElementById("germangrade").innerHTML =
-      `<p>German Grade System:</p>`;
-    document.getElementById("germanpunkte").innerHTML =
-      `<p>German "Punktesystem":</p>`;
-    document.getElementById("problemgrade").innerHTML =
+    doc("germangrade").innerHTML = `<p>German Grade System:</p>`;
+    doc("germanpunkte").innerHTML = `<p>German "Punktesystem":</p>`;
+    doc("problemgrade").innerHTML =
       "Please only give numbers in the range of 0.00-10.00";
   }
 }
@@ -101,9 +99,9 @@ function initialisation() {
     germanpunkte,
   );
 
-  document.getElementById("germangrade").innerHTML =
+  doc("germangrade").innerHTML =
     `<p>German Grade System: <b>${germangrade} ( ~ ${ntgermanpunkte}, ~ ${abipunkte}/900)</b></p>`;
-  document.getElementById("germanpunkte").innerHTML =
+  doc("germanpunkte").innerHTML =
     `<p>German "Punktesystem": <b>${germanpunkte}/15</b></p>`;
 }
 
@@ -128,7 +126,7 @@ function calcgermangrade(E) {
 // "Notenschlüssel" for "Punkte 0-15"
 // Approximation of "Punkte", cuz "Notenschlüssel" may vary (here 40% passing limit as standard)
 function calcgermanpunkte(e) {
-  let currentlim = document.getElementById("limchoice").value;
+  let currentlim = doc("limchoice").value;
 
   const thresholds40 = [
     0, 20, 27, 33, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
@@ -167,17 +165,17 @@ function calcgermanpunkte(e) {
 // 2. GERMAN GRADE --> EUROPEAN GRADE
 // (same references as 1.)
 
-const gergrade = document.getElementById("gergrade");
+const gergrade = doc("gergrade");
 
 // Eventlistener
 gergrade.addEventListener("input", function () {
-  document.getElementById("problemgrade2").innerHTML = "";
+  doc("problemgrade2").innerHTML = "";
 });
 
 // Eventlistener 2
 gergrade.addEventListener("keydown", function (event) {
   if (event.key == "Enter") {
-    document.getElementById("problemgrade2").innerHTML = "";
+    doc("problemgrade2").innerHTML = "";
     if (inputvalidity2()) {
       initialisation2();
     }
@@ -186,18 +184,16 @@ gergrade.addEventListener("keydown", function (event) {
 
 function inputvalidity2() {
   if (gergrade.value === "") {
-    document.getElementById("esgrade2").innerHTML =
-      `<p>European Grade System:</p>`;
-    document.getElementById("problemgrade2").innerHTML = "Please give an input";
+    doc("esgrade2").innerHTML = `<p>European Grade System:</p>`;
+    doc("problemgrade2").innerHTML = "Please give an input";
   } else if (
     Math.trunc(Number(gergrade.value) * 10) / 10 >= 0.6 &&
     Number(gergrade.value) <= 6
   ) {
     return true;
   } else {
-    document.getElementById("esgrade2").innerHTML =
-      `<p>European Grade System:</p>`;
-    document.getElementById("problemgrade2").innerHTML =
+    doc("esgrade2").innerHTML = `<p>European Grade System:</p>`;
+    doc("problemgrade2").innerHTML =
       "Please only give numbers in the range of 0.6-6.0";
   }
 }
@@ -214,7 +210,7 @@ function initialisation2() {
   //Debug
   console.log(" min", mineusgrade, "max", maxeusgrade);
 
-  document.getElementById("esgrade2").innerHTML =
+  doc("esgrade2").innerHTML =
     `<p>European Grade System: <b>from ${mineusgrade} to ${maxeusgrade}</b></p>`;
 }
 
@@ -253,8 +249,7 @@ function mincalceusgrade(N) {
 // Reference: https://www.eursc.eu/BasicTexts/2019-04-D-13-en-10.pdf#page=9
 
 let currenthours;
-const doc = (id) => document.getElementById(id);
-const problemsub1 = document.getElementById("problemsub1");
+const problemsub1 = doc("problemsub1");
 const allboxes = document.querySelectorAll(".box");
 
 // Eventlistener to every box
@@ -483,7 +478,7 @@ function calccurrenthours() {
   );
 
   console.log(currenthours);
-  document.getElementById("tothours").innerHTML = `${currenthours}`;
+  doc("tothours").innerHTML = `${currenthours}`;
   return currenthours;
 }
 
@@ -518,21 +513,190 @@ function validitycheckboxes() {
     noncomplementcheck() &&
     maxmintime(calccurrenthours())
   ) {
-    console.log("TRUEEEE");
-    document.getElementById("next1").disabled = false;
+    doc("next1").disabled = false;
   } else {
-    console.log("NOOO");
-    document.getElementById("next1").disabled = true;
+    doc("next1").disabled = true;
   }
 }
 
 // localStorage
 
 // 5. BAC SUBJECT CHECKBOXES (SLIDE 2)
+// reference: https://www.eursc.eu/de/European-Schools/European-Baccalaureate#:~:text=Die%20Pr%C3%BCfungen%20zum%20Europ%C3%A4ischen%20Abitur
 
-// L1A, L2A
+// Eventlistener 1
+doc("next1").addEventListener("click", function () {
+  calcoptions();
+  validityselect();
+});
+
+// Eventlistener 2
+document.querySelectorAll("select").forEach((select) => {
+  select.addEventListener("change", validityselect);
+});
+
+// Reset all options
+function resetopts() {
+  doc("written1").innerHTML = "";
+  doc("written2").innerHTML = "";
+  doc("written3").innerHTML = "";
+  doc("written4").innerHTML = "";
+  doc("written5").innerHTML = "";
+  doc("oral1").innerHTML = "";
+  doc("oral2").innerHTML = "";
+  doc("oral3").innerHTML = "";
+  doc("written1").disabled = false;
+  doc("written2").disabled = false;
+  doc("written3").disabled = false;
+  doc("written4").disabled = false;
+  doc("written5").disabled = false;
+  doc("oral1").disabled = false;
+  doc("oral2").disabled = false;
+  doc("oral3").disabled = false;
+}
+
+// reset problems
+function resetproblems() {
+  doc("problemstep2").innerHTML = "";
+}
+
+// Written 1 + Oral 1
+function calcwrittenoral1() {
+  if (doc("L1A").checked) {
+    doc("written1").add(new Option("L1A", "L1A"));
+    doc("written1").disabled = true;
+    doc("oral1").add(new Option("L1A", "L1A"));
+    doc("oral1").disabled = true;
+  } else {
+    doc("written1").add(new Option("L1", "L1"));
+    doc("written1").disabled = true;
+    doc("oral1").add(new Option("L1", "L1"));
+    doc("oral1").disabled = true;
+  }
+}
+
+// Written 2
+function calcwritten2() {
+  if (doc("L2A").checked) {
+    doc("written2").add(new Option("L2A", "L2A"));
+    doc("written2").disabled = true;
+  } else {
+    doc("written2").add(new Option("L2", "L2"));
+    doc("written2").disabled = true;
+  }
+}
+
+// Oral2
+function calcoral2() {
+  if (doc("L2A").checked) {
+    doc("oral2").add(new Option("L2A", "L2A"));
+  } else {
+    doc("oral2").add(new Option("L2", "L2"));
+  }
+  if (doc("GE2").checked) {
+    doc("oral2").add(new Option("GE2", "GE2"));
+  } else {
+    doc("oral2").add(new Option("GE4", "GE4"));
+  }
+  if (doc("HI2").checked) {
+    doc("oral2").add(new Option("HI2", "HI2"));
+  } else {
+    doc("oral2").add(new Option("HI4", "HI4"));
+  }
+}
+
+// Written 3
+function calcwritten3() {
+  if (doc("MA5").checked) {
+    doc("written3").add(new Option("MA5", "MA5"));
+    doc("written3").disabled = true;
+  } else {
+    doc("written3").add(new Option("MA3", "MA3"));
+    doc("written3").disabled = true;
+  }
+}
+
+function calcoral3() {
+  if (doc("MAA").checked) {
+    doc("oral3").add(new Option("MAA", "MAA"));
+    doc("oral3").disabled = true;
+  } else {
+    document
+      .querySelectorAll(".periods4:checked:not(.GE):not(.HI):not(.PH)")
+      .forEach((checkbox) => {
+        document
+          .getElementById("oral3")
+          .add(new Option(checkbox.id, checkbox.id));
+      });
+    document.querySelectorAll(".PH:checked, #STS").forEach((checkbox) => {
+      document
+        .getElementById("oral3")
+        .add(new Option(checkbox.id, checkbox.id));
+    });
+  }
+}
+
+function calcwritten45() {
+  document.querySelectorAll(".periods4:checked").forEach((checkbox) => {
+    document
+      .getElementById("written4")
+      .add(new Option(checkbox.id, checkbox.id));
+    document
+      .getElementById("written5")
+      .add(new Option(checkbox.id, checkbox.id));
+  });
+}
+
+// calculate options
+function calcoptions() {
+  resetopts();
+  calcwrittenoral1();
+  calcwritten2();
+  calcoral2();
+  calcwritten3();
+  calcoral3();
+  calcwritten45();
+}
+
+// check fot duplicate written 4 & 5
+function check45() {
+  if (doc("written4").value === doc("written5").value) {
+    doc("problemstep2").innerHTML +=
+      `<p>Written options 4 and 5 are the same</p>`;
+    return false;
+  }
+  return true;
+}
+
+function checkoralwritten() {
+  if (
+    doc("oral3").value === doc("written4").value ||
+    doc("oral3").value === doc("written5").value
+  ) {
+    const dupe = doc("oral3").value;
+    doc("problemstep2").innerHTML += `<p>${dupe} can't be written and oral</p>`;
+  }
+}
 
 // calculate the validity for next
+
+function validityselect() {
+  resetproblems();
+  check45();
+  checkoralwritten();
+  if (doc("problemstep2").children.length === 0) {
+    doc("next2").disabled = false;
+  } else {
+    doc("next2").disabled = true;
+  }
+}
+
+// Back2 Btn
+doc("back2").addEventListener("click", function () {
+  resetproblems();
+  resetopts();
+});
+
 // localStorage
 
 // 6. S7 GRADES TABLE (SLIDE 3)
@@ -548,7 +712,7 @@ function validitycheckboxes() {
 // A = A-Note, B = B-Note
 
 // Eventlistener
-document.getElementById("next3").addEventListener("click", function () {});
+doc("next3").addEventListener("click", function () {});
 
 function calcall() {
   const A = calcavg();
