@@ -236,24 +236,24 @@
                 <fieldset id="writtenoptions">
                     <legend>Written Subjects</legend>
                     <label for="written1">Option 1: </label>
-                    <select name="written1" class="select" id="written1"></select>
+                    <select name="written1" class="selectgr written" id="written1"></select>
                     <label for="written2">Option 2: </label>
-                    <select name="written2" class="select" id="written2"></select>
+                    <select name="written2" class="selectgr written" id="written2"></select>
                     <label for="written3">Option 3: </label>
-                    <select name="written3" class="select" id="written3"></select>
+                    <select name="written3" class="selectgr written" id="written3"></select>
                     <label for="written4">Option 4: </label>
-                    <select name="written4" class="select" id="written4"></select>
+                    <select name="written4" class="selectgr written" id="written4"></select>
                     <label for="written5">Option 5: </label>
-                    <select name="written5" class="select" id="written5"></select>
+                    <select name="written5" class="selectgr written" id="written5"></select>
                 </fieldset>
                 <fieldset id="oraloptions">
                     <legend>Oral Subjects</legend>
                     <label for="oral1">Option 1: </label>
-                    <select name="oral1" class="select" id="oral1"></select>
+                    <select name="oral1" class="selectgr oral" id="oral1"></select>
                     <label for="oral2">Option 2: </label>
-                    <select name="oral2" class="select" id="oral2"></select>
+                    <select name="oral2" class="selectgr oral" id="oral2"></select>
                     <label for="oral3">Option 3: </label>
-                    <select name="oral3" class="select" id="oral3"></select>
+                    <select name="oral3" class="selectgr oral" id="oral3"></select>
                 </fieldset>
                 <div id="problemstep2"></div>
                 <button id="back2">Back</button>
@@ -261,6 +261,20 @@
             </div>
             <div class="step" id="step3">
                 <h3>Step 3: Input your grades of S7</h3>
+                <div id="tablediv">
+                    <tbody>
+                        <table id="gradestable">
+                            <tr id="header">
+                                <th><b>Subject</b></th>
+                                <th><b>A-Mark</b></th>
+                                <th><b>B-Mark</b></th>
+                                <th><b>Written</b></th>
+                                <th><b>Oral</b></th>
+                                <th><b>Final Note</b></th>
+                            </tr>
+                        </table>
+                    </tbody>
+                </div>
                 <button id="back3">Back</button>
                 <button id="next3" disabled>Next</button>
             </div>

@@ -531,8 +531,8 @@ doc("next1").addEventListener("click", function () {
 });
 
 // Eventlistener 2
-document.querySelectorAll("select").forEach((select) => {
-  select.addEventListener("change", validityselect);
+document.querySelectorAll(".selectgr").forEach((selectgr) => {
+  selectgr.addEventListener("change", validityselect);
 });
 
 // Reset all options
@@ -616,6 +616,7 @@ function calcwritten3() {
   }
 }
 
+// Oral 3
 function calcoral3() {
   if (doc("MAA").checked) {
     doc("oral3").add(new Option("MAA", "MAA"));
@@ -638,6 +639,7 @@ function calcoral3() {
   }
 }
 
+// Written 4 & 5
 function calcwritten45() {
   document.querySelectorAll(".periods4:checked").forEach((checkbox) => {
     document
@@ -670,6 +672,7 @@ function check45() {
   return true;
 }
 
+// check for duplicates written oral
 function checkoralwritten() {
   if (
     doc("oral3").value === doc("written4").value ||
@@ -681,7 +684,6 @@ function checkoralwritten() {
 }
 
 // calculate the validity for next
-
 function validityselect() {
   resetproblems();
   check45();
@@ -697,13 +699,59 @@ function validityselect() {
 doc("back2").addEventListener("click", function () {
   resetproblems();
   resetopts();
+  doc("next2").disabled = true;
 });
 
 // localStorage
 
 // 6. S7 GRADES TABLE (SLIDE 3)
 
+// Eventlistener 1
+doc("next2").addEventListener("click", function () {
+  resettable();
+  addrows();
+});
+
+function resettable() {
+  doc("gradestable").innerHTML = `
+    <tr id="header">
+      <th><b>Subject</b></th>
+      <th><b>A-Mark</b></th>
+      <th><b>B-Mark</b></th>
+      <th><b>Written</b></th>
+      <th><b>Oral</b></th>
+      <th><b>Final Note</b></th>
+    </tr>
+  `;
+}
+
 // a table with A, B, Written, Oral and its subject
+function addrows() {
+  document.querySelectorAll(".box:checked:not(#Religion)").forEach((box) => {
+    doc("gradestable").innerHTML += `
+      <tr>
+        <td>${box.id}</td>
+        <td id="${box.id}amark">
+          <input type="number" id="${box.id}amarkinput" class="amark" min="0" max="10" step="0.1">
+        </td>
+        <td id="${box.id}bmark">
+          <input type="number" id="${box.id}bmarkinput" class="bmark" min="0" max="10" step="0.1">
+        </td>
+        <td id="${box.id}written"></td>
+        <td id="${box.id}oral"></td>
+        <td id="${box.id}final">0.00</td>
+      </tr>`;
+  });
+  document.querySelectorAll(".written").forEach((selectgr) => {
+    doc(selectgr.value + "written").innerHTML =
+      `<input type="number" id="${selectgr.value}writteninput" class="writteninput" min="0" max="10" step="0.1">`;
+  });
+  document.querySelectorAll(".oral").forEach((selectgr) => {
+    doc(selectgr.value + "oral").innerHTML =
+      `<input type="number" id="${selectgr.value}oralinput" class="oralinput" min="0" max="10" step="0.1">`;
+  });
+}
+
 // calculate validity for next
 // localStorage
 
