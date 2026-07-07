@@ -710,6 +710,20 @@ doc("back2").addEventListener("click", function () {
 doc("next2").addEventListener("click", function () {
   resettable();
   addrows();
+  //Debug
+  console.log(document.querySelectorAll(".grinput").length);
+
+  // Eventlistener 2
+  document.querySelectorAll(".grinput").forEach((grinput) => {
+    //debug
+    console.log("listener added to", grinput.id);
+
+    grinput.addEventListener("input", function () {
+      //debug
+      console.log("input event fired", grinput.id);
+      validitytable();
+    });
+  });
 });
 
 function resettable() {
@@ -728,31 +742,60 @@ function resettable() {
 // a table with A, B, Written, Oral and its subject
 function addrows() {
   document.querySelectorAll(".box:checked:not(#Religion)").forEach((box) => {
-    doc("gradestable").innerHTML += `
+    doc("gradestable").insertAdjacentHTML(
+      "beforeend",
+      `
       <tr>
         <td>${box.id}</td>
         <td id="${box.id}amark">
-          <input type="number" id="${box.id}amarkinput" class="amark" min="0" max="10" step="0.1">
+          <input type="number" id="${box.id}amarkinput" class="amarkinput grinput" min="0" max="10" step="0.1">
         </td>
         <td id="${box.id}bmark">
-          <input type="number" id="${box.id}bmarkinput" class="bmark" min="0" max="10" step="0.1">
+          <input type="number" id="${box.id}bmarkinput" class="bmarkinput grinput" min="0" max="10" step="0.1">
         </td>
         <td id="${box.id}written"></td>
         <td id="${box.id}oral"></td>
         <td id="${box.id}final">0.00</td>
-      </tr>`;
+      </tr>
+    `,
+    );
   });
   document.querySelectorAll(".written").forEach((selectgr) => {
     doc(selectgr.value + "written").innerHTML =
-      `<input type="number" id="${selectgr.value}writteninput" class="writteninput" min="0" max="10" step="0.1">`;
+      `<input type="number" id="${selectgr.value}writteninput" class="writteninput grinput" min="0" max="10" step="0.1">`;
   });
   document.querySelectorAll(".oral").forEach((selectgr) => {
     doc(selectgr.value + "oral").innerHTML =
-      `<input type="number" id="${selectgr.value}oralinput" class="oralinput" min="0" max="10" step="0.1">`;
+      `<input type="number" id="${selectgr.value}oralinput" class="oralinput grinput" min="0" max="10" step="0.1">`;
   });
 }
 
-// calculate validity for next
+// validity all cells
+function validitytable() {
+  let empty = false;
+  let outOfRange = false;
+
+  document.querySelectorAll(".grinput").forEach((grinput) => {
+    if (grinput.value === "") {
+      empty = true;
+    } else if (Number(grinput.value) < 0 || Number(grinput.value) > 10) {
+      outOfRange = true;
+    }
+  });
+
+  if (empty) {
+    doc("tableproblem").innerHTML =
+      `<p>Please input all grades in a valid format</p>`;
+    doc("next3").disabled = true;
+  } else if (outOfRange) {
+    doc("tableproblem").innerHTML = `<p>Only input numbers 0.00 - 10.00</p>`;
+    doc("next3").disabled = true;
+  } else {
+    doc("tableproblem").innerHTML = "";
+    doc("next3").disabled = false;
+  }
+}
+
 // localStorage
 
 // 7. CALCULATE BAC (SLIDE 4)
