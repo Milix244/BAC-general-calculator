@@ -628,11 +628,13 @@ function calcoral3() {
           .getElementById("oral3")
           .add(new Option(checkbox.id, checkbox.id));
       });
-    document.querySelectorAll(".PH:checked, #STS").forEach((checkbox) => {
-      document
-        .getElementById("oral3")
-        .add(new Option(checkbox.id, checkbox.id));
-    });
+    document
+      .querySelectorAll(".PH:checked, #STS:checked")
+      .forEach((checkbox) => {
+        document
+          .getElementById("oral3")
+          .add(new Option(checkbox.id, checkbox.id));
+      });
   }
 }
 
