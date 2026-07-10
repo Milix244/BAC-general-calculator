@@ -239,10 +239,34 @@ function mincalceusgrade(N) {
 
 // 3. MULTI STEP FORM
 
-// step functionality
-// back and next button
-// progress bar
-// localStorage current step
+// Step Navigation
+const steps = document.querySelectorAll(".step");
+
+function goToStep(stepId) {
+  steps.forEach((step) => step.classList.remove("active"));
+  document.getElementById(stepId).classList.add("active");
+}
+
+document
+  .getElementById("next1")
+  .addEventListener("click", () => goToStep("step2"));
+document
+  .getElementById("back2")
+  .addEventListener("click", () => goToStep("step1"));
+
+document
+  .getElementById("next2")
+  .addEventListener("click", () => goToStep("step3"));
+document
+  .getElementById("back3")
+  .addEventListener("click", () => goToStep("step2"));
+
+document
+  .getElementById("next3")
+  .addEventListener("click", () => goToStep("step4"));
+document
+  .getElementById("back4")
+  .addEventListener("click", () => goToStep("step3"));
 
 // 4. CHECKBOX SYSTEM SUBJECTS S7 (SLIDE 1)
 // Reverse coding from: https://thinkin.co/edu/
