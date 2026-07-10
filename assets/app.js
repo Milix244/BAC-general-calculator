@@ -80,24 +80,11 @@ function initialisation() {
   let germanpunkte;
   let ntgermanpunkte;
 
-  // Debug
-  console.log(grade, formatgrade);
-
   abipunkte = Math.round(calcabipunkte(formatgrade));
   germangrade = Math.trunc(calcgermangrade(abipunkte) * 10) / 10;
   ntgermanpunkte = Math.round(calcgermangrade(abipunkte) * 100) / 100;
   germanpunkte =
     Math.round(calcgermanpunkte(Math.round(formatgrade)) * 100) / 100;
-
-  // Debug
-  console.log(
-    "abipunkte zsm",
-    abipunkte,
-    "germangrade",
-    germangrade,
-    "germanpunkte",
-    germanpunkte,
-  );
 
   doc("germangrade").innerHTML =
     `<p>German Grade System: <b>${germangrade} ( ~ ${ntgermanpunkte}, ~ ${abipunkte}/900)</b></p>`;
@@ -147,9 +134,6 @@ function calcgermanpunkte(e) {
   } else {
     currentthresh = thresholds50;
   }
-
-  //Debug
-  console.log("Threshold", currentlim, currentthresh);
 
   let result = 0;
   for (let i = 0; i < currentthresh.length; i++) {
@@ -206,9 +190,6 @@ function initialisation2() {
 
   maxeusgrade = Math.trunc(maxcalceusgrade(formgrade) * 10) / 100;
   mineusgrade = Math.trunc(mincalceusgrade(formgrade) * 10) / 100;
-
-  //Debug
-  console.log(" min", mineusgrade, "max", maxeusgrade);
 
   doc("esgrade2").innerHTML =
     `<p>European Grade System: <b>from ${mineusgrade} to ${maxeusgrade}</b></p>`;
@@ -501,7 +482,6 @@ function calccurrenthours() {
     0,
   );
 
-  console.log(currenthours);
   doc("tothours").innerHTML = `${currenthours}`;
   return currenthours;
 }
@@ -734,17 +714,10 @@ doc("back2").addEventListener("click", function () {
 doc("next2").addEventListener("click", function () {
   resettable();
   addrows();
-  //Debug
-  console.log(document.querySelectorAll(".grinput").length);
 
   // Eventlistener 2
   document.querySelectorAll(".grinput").forEach((grinput) => {
-    //debug
-    console.log("listener added to", grinput.id);
-
     grinput.addEventListener("input", function () {
-      //debug
-      console.log("input event fired", grinput.id);
       validitytable();
       calcfinalgrade();
     });
@@ -892,17 +865,10 @@ function calcfinalgrade() {
 
 // Eventlistener
 doc("next3").addEventListener("click", function () {
-  console.log("next3 clicked");
-
   const amarkelements = document.querySelectorAll(".amarkinput");
   const bmarkelements = document.querySelectorAll(".bmarkinput");
   const writtenelements = document.querySelectorAll(".writteninput");
   const oralelements = document.querySelectorAll(".oralinput");
-
-  console.log("amark elements:", amarkelements);
-  console.log("bmark elements:", bmarkelements);
-  console.log("written elements:", writtenelements);
-  console.log("oral elements:", oralelements);
 
   const amarkarray = Array.from(amarkelements).map((element) =>
     Number(element.value),
@@ -917,41 +883,19 @@ doc("next3").addEventListener("click", function () {
     Number(element.value),
   );
 
-  console.log("amark elements:", amarkarray);
-  console.log("bmark elements:", bmarkarray);
-  console.log("written elements:", writtenarray);
-  console.log("oral elements:", oralarray);
-
   const amarkavg = calcavg(amarkarray);
-  console.log("amarkavg:", amarkavg);
-
   const bmarkavg = calcavg(bmarkarray);
-  console.log("bmarkavg:", bmarkavg);
-
   const writtenavg = calcavg(writtenarray);
-  console.log("writtenavg:", writtenavg);
-
   const oralavg = calcavg(oralarray);
-  console.log("oralavg:", oralavg);
 
   const finalC = calcC(amarkavg * 10, bmarkavg * 10);
-  console.log("finalC:", finalC);
-
   const finalfinal = calcfinalbac(finalC, writtenavg * 10, oralavg * 10);
-  console.log("finalfinal:", finalfinal);
-
   const finalpunkte = calcabipunkte(finalfinal);
-  console.log("finalpunkte:", finalpunkte);
-
   const finalgermark = Math.trunc(calcgermangrade(finalpunkte) * 10) / 10;
-  console.log("finalgermark:", finalgermark);
 
   doc("bacmark").innerHTML = finalfinal;
-  console.log("bacmark updated:", doc("bacmark").innerHTML);
-
   doc("germmark").innerHTML =
     `${finalgermark} or ${Math.round(finalpunkte)}/900`;
-  console.log("germmark updated:", doc("germmark").innerHTML);
 });
 
 function calcall() {
@@ -970,10 +914,6 @@ function calcavg(arr) {
   const sum = arr.reduce((acc, num) => {
     return acc + num;
   }, 0);
-
-  // Debug
-  console.log("Sum ", sum, "Avg ", sum / arr.length);
-
   return sum / arr.length;
 }
 
