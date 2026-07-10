@@ -722,6 +722,7 @@ doc("next2").addEventListener("click", function () {
       //debug
       console.log("input event fired", grinput.id);
       validitytable();
+      calcfinalgrade();
     });
   });
 });
@@ -734,7 +735,7 @@ function resettable() {
       <th><b>B-Mark</b></th>
       <th><b>Written</b></th>
       <th><b>Oral</b></th>
-      <th><b>Final Note</b></th>
+      <th><b>Final Grade</b></th>
     </tr>
   `;
 }
@@ -779,6 +780,8 @@ function validitytable() {
     if (grinput.value === "") {
       empty = true;
     } else if (Number(grinput.value) < 0 || Number(grinput.value) > 10) {
+      alert("Only input numbers 0.00 - 10.00");
+      grinput.value = "0";
       outOfRange = true;
     }
   });
@@ -796,6 +799,65 @@ function validitytable() {
   }
 }
 
+// update and calculate final Grade through calcC and Calcfinalbac
+
+function calcfinalgrade() {
+  document
+    .querySelectorAll(".box:checked:not(#Religion)")
+    .forEach((subject) => {
+      const aInput = doc(subject.id + "amarkinput");
+      const bInput = doc(subject.id + "bmarkinput");
+      const wInput = doc(subject.id + "writteninput");
+      const oInput = doc(subject.id + "oralinput");
+
+      const amark = Number(aInput.value);
+      const bmark = Number(bInput.value);
+
+      const prefixE = 20 / 17;
+      const prefixO = 20 / 13;
+      const C = calcC(amark, bmark);
+
+      if (wInput != null && oInput != null) {
+        const writtenE = Number(wInput.value);
+        const oralO = Number(oInput.value);
+        if (amark === "" || bmark === "" || writtenE === "" || oralO === "") {
+          return;
+        }
+
+        const finalgrade = calcfinalbac(C, writtenE, oralO);
+        doc(subject.id + "final").innerHTML = finalgrade;
+        return;
+      }
+
+      if (wInput != null) {
+        const writtenE = Number(wInput.value);
+        if (amark === "" || bmark === "" || writtenE === "") {
+          return;
+        }
+        const finalgrade =
+          Math.round((prefixE * 0.5 * C + prefixE * 0.35 * writtenE) * 10) / 10;
+        doc(subject.id + "final").innerHTML = finalgrade;
+        return;
+      }
+      if (oInput != null) {
+        const oralO = Number(oInput.value);
+        if (amark === "" || bmark === "" || oralO === "") {
+          return;
+        }
+        const finalgrade =
+          Math.round((prefixO * 0.5 * C + prefixO * 0.15 * oralO) * 10) / 10;
+        doc(subject.id + "final").innerHTML = finalgrade;
+        return;
+      }
+      if (amark === "" || bmark === "") {
+        return;
+      }
+      const finalgrade = C;
+      doc(subject.id + "final").innerHTML = finalgrade;
+      return;
+    });
+}
+
 // localStorage
 
 // 7. CALCULATE BAC (SLIDE 4)
@@ -805,7 +867,68 @@ function validitytable() {
 // A = A-Note, B = B-Note
 
 // Eventlistener
-doc("next3").addEventListener("click", function () {});
+doc("next3").addEventListener("click", function () {
+  console.log("next3 clicked");
+
+  const amarkelements = document.querySelectorAll(".amarkinput");
+  const bmarkelements = document.querySelectorAll(".bmarkinput");
+  const writtenelements = document.querySelectorAll(".writteninput");
+  const oralelements = document.querySelectorAll(".oralinput");
+
+  console.log("amark elements:", amarkelements);
+  console.log("bmark elements:", bmarkelements);
+  console.log("written elements:", writtenelements);
+  console.log("oral elements:", oralelements);
+
+  const amarkarray = Array.from(amarkelements).map((element) =>
+    Number(element.value),
+  );
+  const bmarkarray = Array.from(bmarkelements).map((element) =>
+    Number(element.value),
+  );
+  const writtenarray = Array.from(writtenelements).map((element) =>
+    Number(element.value),
+  );
+  const oralarray = Array.from(oralelements).map((element) =>
+    Number(element.value),
+  );
+
+  console.log("amark elements:", amarkarray);
+  console.log("bmark elements:", bmarkarray);
+  console.log("written elements:", writtenarray);
+  console.log("oral elements:", oralarray);
+
+  const amarkavg = calcavg(amarkarray);
+  console.log("amarkavg:", amarkavg);
+
+  const bmarkavg = calcavg(bmarkarray);
+  console.log("bmarkavg:", bmarkavg);
+
+  const writtenavg = calcavg(writtenarray);
+  console.log("writtenavg:", writtenavg);
+
+  const oralavg = calcavg(oralarray);
+  console.log("oralavg:", oralavg);
+
+  const finalC = calcC(amarkavg * 10, bmarkavg * 10);
+  console.log("finalC:", finalC);
+
+  const finalfinal = calcfinalbac(finalC, writtenavg * 10, oralavg * 10);
+  console.log("finalfinal:", finalfinal);
+
+  const finalpunkte = calcabipunkte(finalfinal);
+  console.log("finalpunkte:", finalpunkte);
+
+  const finalgermark = Math.trunc(calcgermangrade(finalpunkte) * 10) / 10;
+  console.log("finalgermark:", finalgermark);
+
+  doc("bacmark").innerHTML = finalfinal;
+  console.log("bacmark updated:", doc("bacmark").innerHTML);
+
+  doc("germmark").innerHTML =
+    `${finalgermark} or ${Math.round(finalpunkte)}/900`;
+  console.log("germmark updated:", doc("germmark").innerHTML);
+});
 
 function calcall() {
   const A = calcavg();
@@ -821,7 +944,7 @@ function calcavg(arr) {
     return 0;
   }
   const sum = arr.reduce((acc, num) => {
-    acc + num;
+    return acc + num;
   }, 0);
 
   // Debug
